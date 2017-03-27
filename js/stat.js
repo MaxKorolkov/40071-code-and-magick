@@ -42,10 +42,9 @@ window.renderStatistics = function (ctx, names, times) {
     return rand;
   }
 
-  // Цвет гистограммы - генерация случайного числа и приведение его к hex-виду (16777215 = 0xFFFFFF)
+  // Цвет гистограммы - генерация случайного числа
   function getHistogramColor() {
-    var rand = randomInteger(0, 16777215);
-    return '#' + rand.toString(16);
+    return '#' + randomInteger(0, 255).toString(16) + randomInteger(0, 255).toString(16) + randomInteger(0, 255).toString(16);
   }
 
   // Отрисовка гистограммы
