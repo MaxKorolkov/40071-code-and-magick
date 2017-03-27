@@ -1,59 +1,100 @@
 'use strict';
 window.renderStatistics = function (ctx, names, times) {
-  // Тень
-  ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
-  ctx.shadowOffsetY = 10;
-  ctx.shadowOffsetX = 10;
 
-  // Облако
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(100, 10, 420, 270);
+  // Функция прорисовки облака
+  function createCloud(color, cloudX, cloudY, width, height) {
+    // Тень
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+    ctx.shadowOffsetY = 10;
+    ctx.shadowOffsetX = 10;
 
-  // Отмена прорисовки тени
-  ctx.shadowColor = 'transparent';
-  ctx.shadowOffsetY = 0;
-  ctx.shadowOffsetX = 0;
+    ctx.fillStyle = color;
+    ctx.fillRect(cloudX, cloudY, width, height);
 
-  // Текст в облаке
-  ctx.fillStyle = '#000';
-  ctx.font = '14px PT Mono';
-  ctx.fillText('Ура вы победили!', 120, 40);
-  ctx.fillText('Список результатов:', 120, 60);
-
-  // Определение максимального времени в массиве times
-  var max = -1;
-  for (var i = 0; i < times.length; i++) {
-    var time = times[i];
-    if (time > max) {
-      max = time;
-    }
+    // Отмена прорисовки тени
+    ctx.shadowColor = 'transparent';
+    ctx.shadowOffsetY = 0;
+    ctx.shadowOffsetX = 0;
   }
 
-  // Переменные для гистограммы
+  // Функция добавления текста
+  function createText(color, font, text, textX, textY) {
+    ctx.fillStyle = color;
+    ctx.font = font;
+    ctx.fillText(text, textX, textY);
+  }
+
+  // Получение максимального элемента в массиве
+  function getMax() {
+    var max = -1;
+    for (var i = 0; i < times.length; i++) {
+      if (times[i] > max) {
+        max = times[i];
+      }
+    }
+    return max;
+  }
+
+  // Функция возвращения случайного числа
+  function randomInteger(min, max) {
+    var rand = min + Math.random() * (max + 1 - min);
+    rand = Math.floor(rand);
+    return rand;
+  }
+
+  // Цвет гистограммы - генерация случайного числа и приведение его к hex-виду (16777215 = 0xFFFFFF)
+  function getHistogramColor() {
+    var rand = randomInteger(0, 16777215);
+    return '#' + rand.toString(16);
+  }
+
+  // Отрисовка гистограммы
+  function createHistogram(numberTimes) {
+    ctx.fillStyle = getHistogramColor();
+    var xPos = initialX + indent * numberTimes;
+    var yPos = initialY + histogramHeight - times[numberTimes] * step;
+    var width = histogramWidth;
+    var height = times[numberTimes] * step;
+    ctx.fillRect(xPos, yPos, width, height);
+  }
+
+  // текст сверху - число на гистограмме
+  function topTextHistogram(numberTimes) {
+    var text = Math.floor(times[numberTimes]);
+    var xPos = initialX + indent * numberTimes;
+    var yPos = initialY + histogramHeight - times[numberTimes] * step - 10;
+    createText(textColor, fontColor, text, xPos, yPos);
+  }
+
+  // текст снизу - имя
+  function bottomTextHistogram(numberTimes) {
+    var text = names[numberTimes];
+    var xPos = initialX + indent * numberTimes;
+    var yPos = initialY + histogramHeight + 20;
+    createText(textColor, fontColor, text, xPos, yPos);
+  }
+
+  // Переменные
+  var textColor = '#000';
+  var fontColor = '14px PT Mono';
   var histogramHeight = 150;
-  var step = histogramHeight / max;
+  var step = histogramHeight / getMax(times);
   var histogramWidth = 40;
   var indent = 90;
   var initialX = 120;
   var initialY = 100;
 
-  // Цвет гистограммы
-  function getHistogramColor(nameHist) {
-    if (nameHist === 'Вы') {
-      return 'rgba(255, 0, 0, 1)';
-    }
-    return 'rgba(0, 0, 255, ' + Math.random() + ')';
-  }
+  // Начало программы - отрисовка облака
+  createCloud('#fff', 100, 10, 420, 270);
 
-  // Отрисовка гистограммы
-  for (i = 0; i < times.length; i++) {
-    ctx.fillStyle = '#000';
-    ctx.fillText(Math.floor(times[i]), initialX + indent * i, initialY + histogramHeight - times[i] * step - 10);
+  // Текст в облаке
+  createText(textColor, fontColor, 'Ура вы победили!', 120, 40);
+  createText(textColor, fontColor, 'Список результатов:', 120, 60);
 
-    ctx.fillStyle = getHistogramColor(names[i]);
-    ctx.fillRect(initialX + indent * i, initialY + histogramHeight - times[i] * step, histogramWidth, times[i] * step);
-
-    ctx.fillStyle = '#000';
-    ctx.fillText(names[i], initialX + indent * i, initialY + histogramHeight + 20);
+  // Отрисовка гистограмм для элементов массива times
+  for (var i = 0; i < times.length; i++) {
+    topTextHistogram(i);
+    createHistogram(i);
+    bottomTextHistogram(i);
   }
 };
