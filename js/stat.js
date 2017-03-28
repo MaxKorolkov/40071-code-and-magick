@@ -1,6 +1,18 @@
 'use strict';
-window.renderStatistics = function (ctx, names, times) {
 
+// Получение максимального элемента в массиве
+function getMax(array) {
+  var max = -1;
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] > max) {
+      max = array[i];
+    }
+  }
+  return max;
+}
+
+
+window.renderStatistics = function (ctx, names, times) {
   // Функция прорисовки облака
   function createCloud(color, cloudX, cloudY, width, height) {
     // Тень
@@ -22,17 +34,6 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillStyle = color;
     ctx.font = font;
     ctx.fillText(text, textX, textY);
-  }
-
-  // Получение максимального элемента в массиве
-  function getMax() {
-    var max = -1;
-    for (var i = 0; i < times.length; i++) {
-      if (times[i] > max) {
-        max = times[i];
-      }
-    }
-    return max;
   }
 
   // Функция возвращения случайного числа
