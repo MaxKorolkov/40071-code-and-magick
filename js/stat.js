@@ -2,13 +2,25 @@
 
 // Получение максимального элемента в массиве
 function getMax(array) {
-  var max = -1;
-  for (var i = 0; i < array.length; i++) {
+  var max = array[0];
+  for (var i = 1; i < array.length; i++) {
     if (array[i] > max) {
       max = array[i];
     }
   }
   return max;
+}
+
+// Функция возвращения случайного числа
+function randomInteger(min, max) {
+  var rand = min + Math.random() * (max + 1 - min);
+  rand = Math.floor(rand);
+  return rand;
+}
+
+// Цвет гистограммы - генерация случайного числа
+function getHistogramColor() {
+  return '#' + randomInteger(0, 255).toString(16) + randomInteger(0, 255).toString(16) + randomInteger(0, 255).toString(16);
 }
 
 
@@ -34,18 +46,6 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillStyle = color;
     ctx.font = font;
     ctx.fillText(text, textX, textY);
-  }
-
-  // Функция возвращения случайного числа
-  function randomInteger(min, max) {
-    var rand = min + Math.random() * (max + 1 - min);
-    rand = Math.floor(rand);
-    return rand;
-  }
-
-  // Цвет гистограммы - генерация случайного числа
-  function getHistogramColor() {
-    return '#' + randomInteger(0, 255).toString(16) + randomInteger(0, 255).toString(16) + randomInteger(0, 255).toString(16);
   }
 
   // Отрисовка гистограммы
