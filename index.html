@@ -99,9 +99,9 @@
         <div class="setup-wizard-wrap">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62 86" class="setup-wizard">
             <g class="wizard">
-              <use xlink:href="#wizard-coat"  class="wizard-coat" style="fill: #6589a4"></use>
-              <use xlink:href="#wizard-head"  class="wizard-head"></use>
-              <use xlink:href="#wizard-eyes"  class="wizard-eyes"></use>
+              <use xlink:href="#wizard-coat" class="wizard-coat" style="fill: #6589a4"></use>
+              <use xlink:href="#wizard-head" class="wizard-head"></use>
+              <use xlink:href="#wizard-eyes" class="wizard-eyes"></use>
               <use xlink:href="#wizard-hands" class="wizard-hands"></use>
             </g>
           </svg>
@@ -158,7 +158,7 @@
     <div class="setup-similar-content">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62 86" class="setup-similar-wizard">
         <g class="wizard">
-          <use xlink:href="#wizard-coat" class="wizard-coat" ></use>
+          <use xlink:href="#wizard-coat" class="wizard-coat"></use>
           <use xlink:href="#wizard-head" class="wizard-head"></use>
           <use xlink:href="#wizard-eyes" class="wizard-eyes"></use>
           <use xlink:href="#wizard-hands" class="wizard-hands"></use>
@@ -172,22 +172,23 @@
 
 <script>
   var fireballSize = 22,
-      wizardSpeed = 3,
-      wizardWidth = 70;
-  var getFireballSpeed = function(left) {
+    wizardSpeed = 3,
+    wizardWidth = 70;
+  var getFireballSpeed = function (left) {
     var speed = left ? 5 : 2;
     return speed;
-  }
-  var getWizardHeight = function() {
+  };
+  var getWizardHeight = function () {
     return 1.337 * wizardWidth;
+  };
+  function getWizardX(width) {
+    return width / 2 - wizardWidth / 2;
   }
-function getWizardX(width) {
-  return width/2 - wizardWidth/2;
-}
-function getWizardY(height) {
-  return height/3 - getWizardHeight();
-}
+  function getWizardY(height) {
+    return height / 3 - getWizardHeight();
+  }
 </script>
+<script src="js/stat.js"></script>
 <script src="js/game.js">
 
 </script>
