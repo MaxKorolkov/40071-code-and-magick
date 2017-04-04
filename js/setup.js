@@ -1,12 +1,4 @@
 'use strict';
-
-// Возвращение случайного числа
-function randomInteger(min, max) {
-  var rand = min + Math.random() * (max + 1 - min);
-  rand = Math.floor(rand);
-  return rand;
-}
-
 // Возвращение случайного элемента из массива
 function randomArrayElement(array) {
   return array[randomInteger(0, array.length - 1)];
@@ -27,29 +19,26 @@ var wizardsData = {
   eyesColor: ['black', 'red', 'blue', 'yellow', 'green']
 };
 
-// создание массива похожих персонажей путем случайной выборки из wizardsData
-var wizards = [
-  {
+// создание случайного персонажа методом случайной выборки из wizardsData
+function getRandomWizard() {
+  return {
     name: randomArrayElement(wizardsData.firstNames) + ' ' + randomArrayElement(wizardsData.lastNames),
     coatColor: randomArrayElement(wizardsData.coatColor),
     eyesColor: randomArrayElement(wizardsData.eyesColor)
-  },
-  {
-    name: randomArrayElement(wizardsData.firstNames) + ' ' + randomArrayElement(wizardsData.lastNames),
-    coatColor: randomArrayElement(wizardsData.coatColor),
-    eyesColor: randomArrayElement(wizardsData.eyesColor)
-  },
-  {
-    name: randomArrayElement(wizardsData.firstNames) + ' ' + randomArrayElement(wizardsData.lastNames),
-    coatColor: randomArrayElement(wizardsData.coatColor),
-    eyesColor: randomArrayElement(wizardsData.eyesColor)
-  },
-  {
-    name: randomArrayElement(wizardsData.firstNames) + ' ' + randomArrayElement(wizardsData.lastNames),
-    coatColor: randomArrayElement(wizardsData.coatColor),
-    eyesColor: randomArrayElement(wizardsData.eyesColor)
+  };
+}
+
+// заполнение массива похожих персонажей
+function getWizardsArray(number) {
+  var array = [];
+  for (i = 0; i < number; i++) {
+    array.push(getRandomWizard());
   }
-];
+  return array;
+}
+
+// объявление массива похожих персонажей и заполнение через функцию с количеством эллементов;
+var wizards = getWizardsArray(4);
 
 // Показ диалога инвентаря
 document.querySelector('.setup').classList.remove('hidden');
