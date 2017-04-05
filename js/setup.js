@@ -1,4 +1,6 @@
 'use strict';
+/* global randomInteger */
+
 // Возвращение случайного элемента из массива
 function randomArrayElement(array) {
   return array[randomInteger(0, array.length - 1)];
