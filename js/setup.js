@@ -71,16 +71,6 @@ var setup = document.querySelector('.setup');
 var setupOpenIcon = document.querySelector('.setup-open-icon');
 var setupClose = setup.querySelector('.setup-close');
 var formUserInput = document.forms[0].elements[0];
-var focusUserInput = false;
-
-// обработчики фокуса на поле ввода имени пользователя
-formUserInput.addEventListener('focus', function () {
-  focusUserInput = true;
-});
-
-formUserInput.addEventListener('blur', function () {
-  focusUserInput = false;
-});
 
 // функция закрытия окна персонажа
 function closePopup() {
@@ -89,7 +79,7 @@ function closePopup() {
 
 // обработчик нажатия Esc для закрытия окна персонажа
 function onPopupEscPress(evt) {
-  if (evt.keyCode === 27 && !focusUserInput) {
+  if (evt.keyCode === 27 && formUserInput !== document.activeElement) {
     closePopup();
   }
 }
@@ -104,8 +94,6 @@ function onSetupCloseEnter(evt) {
 // функция открытия окна персонажа
 function openPopup() {
   setup.classList.remove('hidden');
-  document.addEventListener('keydown', onPopupEscPress);
-  setupClose.addEventListener('keydown', onSetupCloseEnter);
 }
 
 // обработчик клика по иконке пользователя
@@ -123,6 +111,10 @@ setupOpenIcon.addEventListener('keydown', onIconEnterPress);
 
 // обработчик закрытия формы
 setupClose.addEventListener('click', closePopup);
+
+// обработчики нажатия клавиш для закрытия формы
+document.addEventListener('keydown', onPopupEscPress);
+setupClose.addEventListener('keydown', onSetupCloseEnter);
 
 // объект с разными вариантами цветов для персонажа
 var wizardColors = {
